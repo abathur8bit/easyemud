@@ -24,14 +24,10 @@ import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaNil;
 import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
-import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 /** Tests to check out how luaj works. */
-public class LuaText {
+public class LuaTestCase {
     @Test
     public void testAssert() {
         assertEquals(1,1);
@@ -51,7 +47,6 @@ public class LuaText {
         String name="Lee";
         String script="print('name=',name)";
         Globals globals = JsePlatform.standardGlobals();    // create an environment to run in
-        LuaValue instance = CoerceJavaToLua.coerce(name);
         globals.set("name",name);
         LuaValue chunk = globals.load(script, "maven-exmaple");
         chunk.call();
