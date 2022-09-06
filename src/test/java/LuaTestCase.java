@@ -24,6 +24,7 @@ import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaNil;
 import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
+import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
 /** Tests to check out how luaj works. */
@@ -140,6 +141,41 @@ public class LuaTestCase {
         setName.call();
         name = globals.get("name").toString();
         assertEquals("Pauline",name);
+    }
+
+    /**
+     * Lua calls methods in a Java class. Lua can inspect the return value,
+     * and can pass in a value to the Java method.
+     */
+    @Test
+    public void luaCallJava() {
+        class ForLua {
+            public String name = "Frank";
+            public String greet() {
+                System.out.println("LUA called greet");
+                name = "Burtha";
+                return name;
+            }
+            public void say(String msg) {
+                System.out.println("Message from LUA=["+msg+"]");
+            }
+        }
+        String script =
+            "function login()\n"+
+            "    print('name from java='..obj.name);\n"+
+            "    name = obj:greet();\n"+
+            "    print('greet from java='..name);\n"+
+            "    obj:say('hello');\n"+
+            "end";
+
+        Globals globals = JsePlatform.standardGlobals();
+        LuaValue instance = CoerceJavaToLua.coerce(new ForLua());
+        globals.set("obj",instance);    //obj is what lua will use to identify the object
+        LuaValue chunk = globals.load(script,"maven-example");
+        chunk.call();   //called so we can find lua functions
+        LuaValue login = globals.get("login");
+        assertNotNull(login);
+        login.call();
     }
 
     @Test
