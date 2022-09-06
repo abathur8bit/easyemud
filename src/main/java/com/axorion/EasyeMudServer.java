@@ -1,11 +1,33 @@
 package com.axorion;
 
+import org.luaj.vm2.Globals;
+import org.luaj.vm2.LuaValue;
+import org.luaj.vm2.lib.jse.CoerceJavaToLua;
+import org.luaj.vm2.lib.jse.JsePlatform;
 import ssobjects.telnet.*;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.StringTokenizer;
 
+class LuaServerInterface {
+    String command;
+    TelnetServerSocket sock;
+    public LuaServerInterface(TelnetServerSocket sock) {
+        this.sock = sock;
+    }
+    public void println(String msg) {
+        print(msg+"\r\n");
+    }
+    public void print(String msg) {
+        try {
+            sock.print(msg);
+        } catch(IOException e) {
+            System.out.println("Unable to print to socket for script");
+            e.printStackTrace();
+        }
+    }
+}
 public class EasyeMudServer extends TelnetServer {
     char ESCAPE = 27;
     long lastIdle = 0;
@@ -13,13 +35,20 @@ public class EasyeMudServer extends TelnetServer {
     public EasyeMudServer(InetAddress host,int port,long idle) throws Exception {
         super(host,port,idle);
     }
+
     @Override
     public void connectionAccepted(TelnetServerSocket sock) {
         System.out.println("New connection from ["+sock.getHostAddress()+"]");
         try {
-
-            sock.println("Welcome");
-            printlnAllExcept("Just joined "+sock.getHostAddress(),sock);
+            LuaServerInterface lsi = new LuaServerInterface(sock);
+            Globals globals = JsePlatform.standardGlobals();
+            LuaValue instance = CoerceJavaToLua.coerce(lsi);
+            globals.set("sock",instance);    //obj is what lua will use to identify the object
+            LuaValue chunk = globals.loadfile("login.lua");
+            chunk.call();   //called so we can find lua functions
+            LuaValue luaFunc = globals.get("connected");
+            luaFunc.call();
+//            printlnAllExcept("Just joined "+sock.getHostAddress(),sock);
         } catch(Exception e) {
             e.printStackTrace();
         }
