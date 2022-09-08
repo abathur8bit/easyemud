@@ -1,3 +1,3 @@
 function connected()
-    sock:println('Hello socket from lua script');
+    sock:println('Hello World from a Lua login script !!!');
 end

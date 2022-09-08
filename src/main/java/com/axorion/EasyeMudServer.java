@@ -48,7 +48,6 @@ public class EasyeMudServer extends TelnetServer {
             chunk.call();   //called so we can find lua functions
             LuaValue luaFunc = globals.get("connected");
             luaFunc.call();
-//            printlnAllExcept("Just joined "+sock.getHostAddress(),sock);
         } catch(Exception e) {
             e.printStackTrace();
         }
