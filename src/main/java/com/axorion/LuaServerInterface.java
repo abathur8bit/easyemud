@@ -45,6 +45,10 @@ public class LuaServerInterface {
     public void moveWumpus() {
         world.moveWumpus();
     }
+    public void spawnWorld() {
+        world.spawn();
+    }
+
     public int getRoom(int offset) {
         return world.getRoom()+offset;
     }

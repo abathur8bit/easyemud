@@ -20,6 +20,7 @@ A new MUD engine being written in **Java**, and using **Lua** as the scripting l
 Testing LUA for the script engine, and using LUAJ. 
 
 # Reference
+- [Programming in LUA](https://www.lua.org/pil/contents.html)
 - [LUAJ Maven](https://mvnrepository.com/artifact/org.luaj/luaj-jse)
 - [LUAJ Project](https://github.com/luaj/luaj)
 - [LUAJ API docs](http://luaj.org/luaj/3.0/api/overview-summary.html)

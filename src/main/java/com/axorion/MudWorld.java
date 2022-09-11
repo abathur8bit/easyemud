@@ -37,6 +37,12 @@ public class MudWorld {
 //            else System.out.println(n+" "+i);
 //        }
 
+        spawn();
+    }
+
+    public void spawn() {
+        System.out.println("spawning");
+        room = 0;
         wumpus = rnd(1,19);
         bat[0] = rnd(1,19);
         do {
@@ -91,7 +97,11 @@ public class MudWorld {
     }
 
     public void moveWumpus() {
-        wumpus = rnd(0,19);
+        int old = wumpus;
+        do {
+            wumpus = rnd(0,19);                     // move to anywhere in the world
+        } while(wumpus == old);   //except where he already is, or where the player is
+        System.out.println("wumpus now="+wumpus);
     }
 
     /**
