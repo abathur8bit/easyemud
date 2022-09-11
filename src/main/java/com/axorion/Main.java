@@ -25,20 +25,20 @@ import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void test(String[] args) {
         System.out.println("Hello world!");
-        String script = "print('hello, world', _VERSION)";
-
-        // create an environment to run in
-        Globals globals = JsePlatform.standardGlobals();
-
-        // Use the convenience function on the globals to load a chunk.
-        LuaValue chunk = globals.load(script, "maven-exmaple");
-
-        // Use any of the "call()" or "invoke()" functions directly on the chunk.
-        chunk.call();
-
-        chunk = globals.loadfile("scripts/java.lua");
-        chunk.call();
+//        String script = "print('hello, world', _VERSION)";
+//
+//        // create an environment to run in
+//        Globals globals = JsePlatform.standardGlobals();
+//
+//        // Use the convenience function on the globals to load a chunk.
+//        LuaValue chunk = globals.load(script, "maven-exmaple");
+//
+//        // Use any of the "call()" or "invoke()" functions directly on the chunk.
+//        chunk.call();
+//
+//        chunk = globals.loadfile("scripts/java.lua");
+//        chunk.call();
     }
 }
