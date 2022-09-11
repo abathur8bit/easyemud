@@ -16,6 +16,32 @@ A new MUD engine being written in **Java**, and using **Lua** as the scripting l
 [lua]: https://www.lua.org
 [repo]: https://github.com/abathur8bit/easyemud
 
+# Status
+Starting simple. Currently Plays Hunt the Wumpus. Each connection get's it's own instance of the game. No bats or pits implemented. That will come in future releases. 
+
+# Build and run
+First you will need to get the server built and running. Then you can use a telnet or MUD client to connect and play. 
+
+## Server
+You need to first install ssobjects. It's not available via the maven repository, so grab from github, and install via 
+
+    git clone https://github.com/abathur8bit/ssobjects.git
+    cd ssobjects/java
+    mvn install 
+    cd ../..
+
+Next build EasyeMud and run with
+
+    git clone https://github.com/abathur8bit/easyemud.git
+    cd easyemud
+    mvn exec:java
+    
+## Client
+The server will be running on port 6660. 
+
+    telnet localhost 6660
+
+
 # Script Engine
 Testing LUA for the script engine, and using LUAJ. 
 
