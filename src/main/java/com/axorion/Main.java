@@ -38,7 +38,7 @@ public class Main {
         // Use any of the "call()" or "invoke()" functions directly on the chunk.
         chunk.call();
 
-        chunk = globals.loadfile("java.lua");
+        chunk = globals.loadfile("scripts/java.lua");
         chunk.call();
     }
 }
