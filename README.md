@@ -19,6 +19,15 @@ A new MUD engine being written in **Java**, and using **Lua** as the scripting l
 # Status
 Starting simple. Currently Plays Hunt the Wumpus. Each connection get's it's own instance of the game. No bats or pits implemented. That will come in future releases. 
 
+# Hunt the Wumpus
+The rules are simple. The map is made up of 20 caves, arranged like a dodecahedron. The player starts in cave 1, and the Wumpus is hidden somewhere in the map. Also in the map are a couple pits you can fall into, and bats that will pick the player up and randomly drop them into another cave. To win the game, the player will fire one of 5 bendy arrows and try to hit the Wumpus.
+
+The caves are in complete darkness, so the player cannot see into adjacent caves; instead, when moving to a new empty cave, the game describes if they can smell a Wumpus, hear a bat, or feel a draft from a pit in one of the connected caves. Entering a cave with a pit ends the game due to the player falling in, while entering the cave with the Wumpus startles it; the Wumpus will either move to another cave or remain and kill the player.
+
+Below is the map for Hunt the Wumpus:
+
+![](img/easyemud/wumpus-map.png)
+
 # Build and run
 First you will need to get the server built and running. Then you can use a telnet or MUD client to connect and play. 
 
