@@ -43,6 +43,7 @@ Next build EasyeMud and run with
 
     git clone https://github.com/abathur8bit/easyemud.git
     cd easyemud
+    mvn package
     mvn exec:java
     
 ## Client
