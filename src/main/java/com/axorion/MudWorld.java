@@ -26,7 +26,7 @@ public class MudWorld {
     int wumpus;
     int[] bat = new int[2];
     int[] pit = new int[2];
-    int room = 0;   //player
+    int player = 0;   //player
     int arrows = START_ARROWS;
 
     public MudWorld() {
@@ -42,7 +42,7 @@ public class MudWorld {
 
     public void spawn() {
         System.out.println("spawning");
-        room = 0;
+        player = 0;
         wumpus = rnd(1,19);
         bat[0] = rnd(1,19);
         do {
@@ -68,12 +68,12 @@ public class MudWorld {
         this.wumpus = wumpus;
     }
 
-    public void setRoom(int room) {
-        this.room = room;
+    public void setPlayer(int player) {
+        this.player = player;
     }
 
     public int getPlayer() {
-        return room;
+        return player;
     }
 
     public int getWorld(int n) {

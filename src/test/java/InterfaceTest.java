@@ -18,13 +18,13 @@ public class InterfaceTest {
         assertEquals(4,exits[1]);
         assertEquals(7,exits[2]);
 
-        world.setRoom(1);
+        world.setPlayer(1);
         lsi.connectingRooms(exits,1);
         assertEquals(2,exits[0]);
         assertEquals(0,exits[1]);
         assertEquals(9,exits[2]);
 
-        world.setRoom(19);
+        world.setPlayer(19);
         lsi.connectingRooms(exits,19);
         assertEquals(15,exits[0]);
         assertEquals(18,exits[1]);
@@ -36,7 +36,7 @@ public class InterfaceTest {
         MudWorld world = new MudWorld();
         LuaServerInterface lsi = new LuaServerInterface(null,world);
         int wumpus = world.getWumpus();
-        world.setRoom(wumpus-1);
+        world.setPlayer(wumpus-1);
         assertTrue(lsi.isWumpusNearby());
     }
 }

@@ -9,14 +9,17 @@ import java.io.IOException;
 public class LuaServerInterface {
     String command;
     TelnetServerSocket sock;
+    EasyeMudServer server;
     Globals globals;
     MudWorld world;
     boolean awaitingInput = false;
     public LuaValue awaitHandler = null;
+    int mode = 1;   //0=dead, 1=playing     //todo should be an enum, but not sure how to best integreat enum with lua
 
-    public LuaServerInterface(TelnetServerSocket sock,MudWorld world) {
+    public LuaServerInterface(TelnetServerSocket sock,MudWorld world,EasyeMudServer server) {
         this.sock = sock;
         this.world = world;
+        this.server = server;
     }
 
     public void println(String msg) {
@@ -32,6 +35,8 @@ public class LuaServerInterface {
         }
     }
 
+    public int getMode() {return mode;}
+    public void setMode(int m) {mode = m;}
     public void ask(String prompt,LuaValue handler) {
         print(prompt);
         awaitingInput = true;
@@ -115,7 +120,7 @@ public class LuaServerInterface {
                 valid = true;
         }
         if(valid)
-            world.setRoom(n);
+            world.setPlayer(n);
     }
 
     public String getExits(int offset) {
@@ -136,5 +141,9 @@ public class LuaServerInterface {
         for(int i = start, exitIndex = 0; i < start+3; i++,exitIndex++) {
             exits[exitIndex] = world.getWorld(i);
         }
+    }
+
+    public void close() {
+        server.close(sock);
     }
 }

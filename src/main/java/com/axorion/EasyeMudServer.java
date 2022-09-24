@@ -19,9 +19,16 @@ public class EasyeMudServer extends TelnetServer {
     long lastIdle = 0;
 
     HashMap<TelnetServerSocket,LuaServerInterface> sockInterfaces = new HashMap<>();
+
     public EasyeMudServer(InetAddress host,int port,long idle) throws Exception {
         super(host,port,idle);
         mudWorld = new MudWorld();
+    }
+
+    public void close(TelnetServerSocket sock) {
+        sock.close();
+        sockInterfaces.remove(sock);
+        mudWorld.spawn();   //make the world different for next player connection
     }
 
     @Override
@@ -30,7 +37,7 @@ public class EasyeMudServer extends TelnetServer {
         try {
             LuaServerInterface lsi = sockInterfaces.get(sock);
             if(lsi == null) {
-                lsi = new LuaServerInterface(sock,mudWorld);
+                lsi = new LuaServerInterface(sock,mudWorld,this);
                 sockInterfaces.put(sock,lsi);
             }
             Globals globals = JsePlatform.standardGlobals();
@@ -110,6 +117,7 @@ public class EasyeMudServer extends TelnetServer {
         lastIdle = now;
 //        try{Thread.sleep(1000);} catch(InterruptedException e){}
     }
+
     public void clearScreen(TelnetMessage msg) throws IOException
     {
         msg.sock.print(ESCAPE+"[2J");
