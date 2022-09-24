@@ -97,7 +97,9 @@ public class EasyeMudServer extends TelnetServer {
                 }
             }
         } catch(IOException e) {
-            System.out.println("ERROR got exception when sending data");
+            System.out.println("ERROR when sending data");
+        } catch(Exception e) {
+            System.out.println("ERROR unhandled exception");
         }
     }
 

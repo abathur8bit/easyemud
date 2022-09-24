@@ -49,8 +49,8 @@ public class LuaServerInterface {
         world.spawn();
     }
 
-    public int getRoom(int offset) {
-        return world.getRoom()+offset;
+    public int getPlayer(int offset) {
+        return world.getPlayer()+offset;
     }
 
     public int getWumpus() {
@@ -71,8 +71,28 @@ public class LuaServerInterface {
 
     public boolean isWumpusNearby() {
         int[] exits = new int[3];
-        calcExits(exits,world.getWumpus());
-        return contains(world.getRoom(),exits);
+        connectingRooms(exits,world.getWumpus());
+        return contains(world.getPlayer(),exits);
+    }
+
+    public boolean isPitNearby() {
+        int[] rooms = new int[3];
+        connectingRooms(rooms,world.getPlayer());
+        boolean nearby = false;
+        for(int i=0; i<world.getPitCount() && nearby == false; i++) {
+            nearby = contains(world.getPit(i),rooms);       //see if we are near a bat
+        }
+        return nearby;
+    }
+
+    public boolean isBatNearby() {
+        int[] rooms = new int[3];
+        connectingRooms(rooms,world.getPlayer());
+        boolean nearby = false;
+        for(int i=0; i<world.getBatCount() && nearby == false; i++) {
+            nearby = contains(world.getBat(i),rooms);       //see if we are near a bat
+        }
+        return nearby;
     }
 
     /**
@@ -88,7 +108,7 @@ public class LuaServerInterface {
 
     public void moveTo(int n) {
         int[] exits = new int[3];
-        calcExits(exits,world.getRoom());
+        connectingRooms(exits,world.getPlayer());
         boolean valid = false;
         for(int i = 0; i < exits.length; i++) {
             if(n == exits[i])
@@ -100,7 +120,7 @@ public class LuaServerInterface {
 
     public String getExits(int offset) {
         int[] exits = new int[3];
-        calcExits(exits,world.getRoom());
+        connectingRooms(exits,world.getPlayer());
         StringBuilder buff = new StringBuilder();
         buff.append(exits[0]+offset)
             .append(',')
@@ -111,8 +131,8 @@ public class LuaServerInterface {
         return buff.toString();
     }
 
-    public void calcExits(int[] exits,int room) {
-        int start = (room)*3;
+    public void connectingRooms(int[] exits,int sourceRoom) {
+        int start = (sourceRoom)*3;
         for(int i = start, exitIndex = 0; i < start+3; i++,exitIndex++) {
             exits[exitIndex] = world.getWorld(i);
         }

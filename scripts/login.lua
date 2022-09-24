@@ -1,4 +1,4 @@
-offset = 1  -- 0=0-19 1=1-20
+offset = 0  -- 0=0-19 1=1-20
 -- function calcExits(r)
 --     return (r-1)*3;
 -- end
@@ -14,13 +14,14 @@ function connected()
 end
 
 function showRoom()
-    sock:println("")
-    sock:println('You are in room '..sock:getRoom(offset))
-    sock:println("Tunnels lead to "..sock:getExits(offset))
+    showRoomNumberExits()
+    showPits()
+    showBats()
+
     if(sock:isWumpusNearby()) then
         sock:println("I smell a Wumpus")
         sock:ask("[S]hoot or [M]ove? ",moveResponse)
-    elseif(sock:getWumpus() == sock:getRoom()) then
+    elseif(sock:getWumpus() == sock:getPlayer()) then
         sock:println("")
         sock:println("You bumped into the Wumpus!")
         r=sock:roll(1,10)
@@ -40,6 +41,35 @@ function showRoom()
         sock:ask("[S]hoot or [M]ove? ",moveResponse)
     end
 
+end
+
+function showRoomNumberExits()
+     sock:println("")
+     sock:println('You are in room '..sock:getPlayer(offset))
+     sock:println("Tunnels lead to "..sock:getExits(offset))
+
+end
+
+function showPits()
+    if(sock:isPitNearby()) then
+        sock:println("You feel a draft")
+    end
+end
+
+function showBats()
+    if(sock:isBatNearby()) then
+        sock:println("Bats nearby")
+    end
+
+    if(isWithBat()) then
+        sock:println("player and bat in same room")
+    end
+end
+
+function isWithBat()
+    if(sock:getBat() == sock:getPlayer()) then
+        return true
+    end
 end
 
 function moveResponse(resp)

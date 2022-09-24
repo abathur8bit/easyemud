@@ -72,7 +72,7 @@ public class MudWorld {
         this.room = room;
     }
 
-    public int getRoom() {
+    public int getPlayer() {
         return room;
     }
 
@@ -88,6 +88,8 @@ public class MudWorld {
         bat[n] = w;
     }
 
+    public int getBatCount() {return bat.length;}
+
     public int getPit(int n) {
         return pit[n];
     }
@@ -95,6 +97,8 @@ public class MudWorld {
     public void setPit(int n,int w) {
         pit[n] = w;
     }
+
+    public int getPitCount() {return pit.length;}
 
     public void moveWumpus() {
         int old = wumpus;

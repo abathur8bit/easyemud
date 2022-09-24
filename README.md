@@ -62,3 +62,4 @@ Testing LUA for the script engine, and using LUAJ.
 - [LUAJ API docs](http://luaj.org/luaj/3.0/api/overview-summary.html)
 - [Hunt the wumpus](https://en.wikipedia.org/wiki/Hunt_the_Wumpus)
 - [Hunt the wumpus atari archive](https://www.atariarchives.org/bcc1/showpage.php?page=249)
+- [Hunt the Wumpus game online](https://jayisgames.com/games/hunt-the-wumpus/)
